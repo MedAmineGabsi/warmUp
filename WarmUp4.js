@@ -1,11 +1,23 @@
+function each(coll, callback) {
+  if (Array.isArray(coll)) {
+    for (let i = 0; i < coll.length; i++) {
+      callback(coll[i], i);
+    }
+  } else {
+    for (var key in coll) {
+      callback(coll[key], key);
+    }
+  }
+}
+
 // 1 - Write a function named objKey that take an object as a parameter and returns an array containing the keys of the object
 // objKey({name:'ahmed',age:20}) ==> ['name','age']
 
 function objKey(obj) {
   var result = [];
-  for (var key in obj) {
+  each(obj, function (value, key) {
     result.push(key);
-  }
+  });
   return result;
 }
 
@@ -14,9 +26,9 @@ function objKey(obj) {
 
 function objLength(obj) {
   var result = 0;
-  for (var key in obj) {
-    result += 1;
-  }
+  each(obj, function (value, key) {
+    result++;
+  });
   return result;
 }
 
@@ -25,8 +37,8 @@ function objLength(obj) {
 
 function objSort(array) {
   var result = [];
-  for (let i = 0; i < array.length; i++) {
-    result.splice(array[i].id, 0, array[i]);
-  }
+  each(array, function (element, index) {
+    result.splice(element["id"], 0, element);
+  });
   return result;
 }
