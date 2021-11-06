@@ -1,3 +1,4 @@
+
 function each(coll, callback) {
   if (Array.isArray(coll)) {
     for (let i = 0; i < coll.length; i++) {
@@ -42,3 +43,4 @@ function objSort(array) {
   });
   return result;
 }
+
