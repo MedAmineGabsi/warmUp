@@ -10,7 +10,8 @@ function each(coll, callback) {
   }
 }
 
-// 1 - Write a function named objKey that take an object as a parameter and returns an array containing the keys of the object
+// 1 - Write a function named objKey that take an object as a parameter and returns an array containing
+//  the keys of the object
 // objKey({name:'ahmed',age:20}) ==> ['name','age']
 
 function objKey(obj) {
@@ -27,13 +28,15 @@ function objKey(obj) {
 function objLength(obj) {
   var result = 0;
   each(obj, function (value, key) {
-    result++;
+    if (key) {
+      result++;
+    }
   });
   return result;
 }
 
 // 3 - Write a function named objSort to sort an array of JavaScript objects based on the id
-// objSort([{id:2,value:50},{id:0,value:70},{id:1,value:40}]) ==> [{id:0,value:70},{id:1,value:40},{id:2,value:50}]
+objSort([{id:2,value:50},{id:0,value:70},{id:1,value:40}]) //==> [{id:0,value:70},{id:1,value:40},{id:2,value:50}]
 
 function objSort(array) {
   var result = [];
