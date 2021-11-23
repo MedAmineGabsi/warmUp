@@ -39,3 +39,26 @@
 //        age: 33
 //  }];
 //  agesToMinutes(people);
+// ~~~~~~~~~~~~~~~~ already implemented functions ~~~~~~~~~~~~~~~~
+function each(coll, func) {
+  if (Array.isArray(coll)) {
+    for (var i = 0; i < coll.length; i++) {
+      func(coll[i], i);
+    }
+  } else {
+    for (var key in coll) {
+      func(coll[key], key);
+    }
+  }
+}
+
+function map(coll, f) {
+  var acc = [];
+  if (!Array.isArray(coll)) {
+    acc = {};
+  }
+  each(coll, function (element, key) {
+    acc[key] = f(element, key);
+  });
+  return acc;
+}
