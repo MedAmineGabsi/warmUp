@@ -1,3 +1,59 @@
+function each(coll, func) {
+  if (Array.isArray(coll)) {
+    for (var i = 0; i < coll.length; i++) {
+      func(coll[i], i);
+    }
+  } else {
+    for (var key in coll) {
+      func(coll[key], key);
+    }
+  }
+}
+
+function filter(coll, predicate) {
+  var acc = [];
+  if (!Array.isArray(coll)) {
+    acc = {};
+  }
+  each(coll, function (value, key) {
+    if (predicate(value, key)) {
+      if (Array.isArray(coll)) {
+        acc.push(value);
+      } else {
+        acc[key] = value;
+      }
+    }
+  });
+  return acc;
+}
+
+function map(coll, f) {
+  var acc = [];
+  if (!Array.isArray(coll)) {
+    acc = {};
+  }
+  each(coll, function (element, key) {
+    acc[key] = f(element, key);
+  });
+  return acc;
+}
+
+function reduce(coll, f, acc) {
+  if (acc === undefined) {
+    if (Array.isArray(coll)) {
+      var acc = coll[0];
+      coll = coll.slice(1);
+    } else {
+      acc = coll[Object.keys(coll)[0]];
+      delete coll[Object.keys(coll)[0]];
+    }
+    each(coll, function (element, i) {
+      acc = f(acc, element, i);
+    });
+    return acc;
+  }
+}
+
 // ======= EACH =================================================================================================================================================
 // Complete the greatestProduct method so that it'll find the greatest product of five consecutive digits in the given string of digits.
 
@@ -8,6 +64,26 @@
 // The input string always has more than five digits.
 
 // ========================================================================================================================================================
+
+function greatestProduct(numbers) {
+  var arrayNumber = numbers.split("");
+  var acc = [];
+  each(arrayNumber, function (element, key) {
+    var temp = arrayNumber.splice(key, key + 5);
+    var numAcc = 1;
+    each(temp, function (element, key) {
+      numAcc *= element;
+    });
+    acc.push(numAcc);
+  });
+  var max = acc[0];
+  each(acc, function (element, key) {
+    if (max > acc[key]) {
+      max = element;
+    }
+  });
+  return max;
+}
 
 // ============== MAP ==========================================================================================================================================
 
@@ -20,6 +96,17 @@
 // ex. (shiftLetters('abcxyz') // => "bcdyz{"
 
 // ========================================================================================================================================================
+
+function shiftLetter(string) {
+  var letters = string.split("");
+  var newArray = map(letters, function (element) {
+    return element.charCodeAt(0);
+  });
+  var crypted = map(newArray, function (element) {
+    return String.fromCharCode(element + 1);
+  });
+  return crypted.join("");
+}
 
 // ============= FILTER ===========================================================================================================================================
 
@@ -34,6 +121,12 @@
 
 // ========================================================================================================================================================
 
+function arrayDiff(array, predic) {
+  return filter(array, function (element, key) {
+    return !predic.includes(element);
+  });
+}
+
 // ============= REDUCE ===========================================================================================================================================
 
 // Write a function that takes a string and returns an object representing the character
@@ -43,5 +136,19 @@
 // ex. countLetters('abbcccddddeeeee') // => {a:1, b:2, c:3, d:4, e:5}
 
 // ========================================================================================================================================================
+function countLetters(string) {
+  var strArray = string.split("");
+  return reduce(
+    strArray,
+    function (acc, element) {
+      if (acc.hasOwnProperty(element)) {
+        return (acc[element] += 1);
+      } else {
+        return (acc[element] = 1);
+      }
+    },
+    {}
+  );
+}
 
 //Good Luck :))
