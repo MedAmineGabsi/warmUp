@@ -1,4 +1,3 @@
-
 //1
 // Given an array of integers and an integer n,
 // find all occurrences of n in the given array and return another array containing all the index positions of n in the given array.
